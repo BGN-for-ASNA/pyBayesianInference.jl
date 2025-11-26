@@ -7,7 +7,7 @@
 [![License: GPL (\>= 3)](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Julia](https://img.shields.io/badge/Julia-1+-9558B2?logo=julia)](https://julialang.org/)
 </div>
 
-------------------------------------------------------------------------
+---
 
 ## One Mental Model. Three Languages.
 
@@ -19,11 +19,65 @@
 
 ### Compare the Syntax
 
-| Julia Syntax | Python Syntax | R Syntax |
-|-----------------------|-------------------------|-------------------------|
-| \`\`\`julia \@BI function model(; weight, height) \# Priors sigma = m.dist.uniform(0, 50, name="sigma") alpha = m.dist.normal(178, 20, name="alpha") beta = m.dist.normal(0, 1, name="beta") \# Likelihood mu = alpha + beta \* weight m.dist.normal(mu, sigma, obs=height) end \`\`\` | \`\`\`python def model(height, weight): \# Priors sigma = bi.dist.uniform(0, 50, name='sigma', shape=(1,)) alpha = bi.dist.normal(178, 20, name='alpha', shape=(1,)) beta = bi.dist.normal(0, 1, name='beta', shape=(1,)) \# Likelihood mu = alpha + beta \* weight bi.dist.normal(mu, sigma, obs=height) \`\`\` | \`\`\`r model \<- function(height, weight){ \# Priors sigma = bi.dist.uniform(0, 50, name='sigma', shape=c(1)) alpha = bi.dist.normal(178, 20, name='alpha', shape=c(1)) beta = bi.dist.normal(0, 1, name='beta', shape=c(1)) \# Likelihood mu = alpha + beta \* weight bi.dist.normal(mu, sigma, obs=height) } \`\`\` |
+<table width="100%">
+<tr>
+<th width="33%">Julia Syntax</th>
+<th width="33%">Python Syntax</th>
+<th width="33%">R Syntax</th>
+</tr>
+<tr>
+<td valign="top">
 
-------------------------------------------------------------------------
+```Julia
+@BI function model(weight, height)
+    # Priors
+    sigma = bi.dist.uniform(0, 50, name='sigma', shape=(1,))
+    alpha = bi.dist.normal(178, 20, name='alpha', shape=(1,))
+    beta  = bi.dist.normal(0, 1, name='beta', shape=(1,))
+
+    # Likelihood
+    mu = alpha + beta * weight
+    bi.dist.normal(mu, sigma, obs=height)
+end
+```
+
+</td>
+<td valign="top">
+
+```python
+def model(height, weight):
+    # Priors
+    sigma = bi.dist.uniform(0, 50, name='sigma', shape=(1,))
+    alpha = bi.dist.normal(178, 20, name='alpha', shape=(1,))
+    beta  = bi.dist.normal(0, 1, name='beta', shape=(1,))
+
+    # Likelihood
+    mu = alpha + beta * weight
+    bi.dist.normal(mu, sigma, obs=height)
+```
+
+<td valign="top">
+
+```r
+model <- function(height, weight){
+  # Priors
+  sigma = bi.dist.uniform(0, 50, name='sigma', shape=c(1))
+  alpha = bi.dist.normal(178, 20, name='alpha', shape=c(1))
+  beta  = bi.dist.normal(0, 1, name='beta', shape=c(1))
+
+  # Likelihood
+  mu = alpha + beta * weight
+  bi.dist.normal(mu, sigma, obs=height)
+}
+```
+
+</details>
+
+</td>
+</tr>
+</table>
+
+---
 
 ## Built for Speed
 
@@ -38,7 +92,7 @@ Leveraging Just-In-Time (JIT) compilation via JAX, BI outperforms traditional en
 
 *\> Comparison of execution time for a Social Relations Model. Source: Sosa et al. (2025).*
 
-------------------------------------------------------------------------
+---
 
 ## Installation & Setup
 
@@ -100,7 +154,7 @@ m = importBI(platform="cpu")
 m = importBI(platform="gpu")
 ```
 
-------------------------------------------------------------------------
+---
 
 ## Quick Start
 
@@ -136,7 +190,7 @@ m.summary()
 end
 ```
 
-------------------------------------------------------------------------
+---
 
 ## Features
 
@@ -169,7 +223,7 @@ end
 -   WAIC and LOO (ELPD) model comparison.
 -   R-hat and Effective Sample Size (ESS).
 
-------------------------------------------------------------------------
+---
 
 ## Available Distributions
 
@@ -216,7 +270,7 @@ The package provides wrappers for a comprehensive set of distributions from NumP
 
 *(See package documentation for the full list)*
 
-------------------------------------------------------------------------
+---
 
 ## Documentation
 
@@ -232,7 +286,7 @@ For full documentation and examples:
 
 For help with specific functions in the underlying BI library, refer to the [BayesianInference documentation](https://github.com/BGN-for-ASNA/BIR).
 
-------------------------------------------------------------------------
+---
 
 ## Platform Support
 
@@ -242,20 +296,20 @@ For help with specific functions in the underlying BI library, refer to the [Bay
 
 GPU support available on compatible systems with JAX GPU installation.
 
-------------------------------------------------------------------------
+---
 
 ## Related Packages
 
 -   [BIR](https://github.com/BGN-for-ASNA/BIR) - R implementation
 -   [BI](https://pypi.org/project/BayesInference) - Python implementation
 
-------------------------------------------------------------------------
+---
 
-::: {align="center"}
+<div align="center">
 **BayesianInference.jl (BIJ)**\
 Based on "The Bayesian Inference library for Python, R, Julia" by Sosa, McElreath, & Ross (2025).
 
 [GitHub](https://github.com/BGN-for-ASNA/BIJ) \| [Issues](https://github.com/BGN-for-ASNA/BIJ/issues) \| [Quick Start](QUICKSTART.md)
 
 © 2025 BayesianInference Team. Released under GPL-3.0.
-:::
+</div>
