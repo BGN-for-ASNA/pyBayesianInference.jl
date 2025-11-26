@@ -1,16 +1,13 @@
 # Bayesian Inference for Julia
 
-<div align="center">
-
-**A Julia wrapper for the unified probabilistic programming library, bringing JAX-powered Bayesian inference to the Julia ecosystem.**  
+::: {align="center"}
+**A Julia wrapper for the unified probabilistic programming library, bringing JAX-powered Bayesian inference to the Julia ecosystem.**\
 *Run bespoke models on CPU, GPU, or TPU with Julia's native syntax.*
 
-[![License: GPL (>= 3)](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Julia](https://img.shields.io/badge/Julia-1+-9558B2?logo=julia)](https://julialang.org/)
+[![License: GPL (\>= 3)](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![Julia](https://img.shields.io/badge/Julia-1+-9558B2?logo=julia)](https://julialang.org/)
+:::
 
-</div>
-
----
+------------------------------------------------------------------------
 
 ## One Mental Model. Three Languages.
 
@@ -22,65 +19,13 @@
 
 ### Compare the Syntax
 
-<table width="100%">
-<tr>
-<th width="33%">Julia Syntax</th>
-<th width="33%">Python Syntax</th>
-<th width="33%">R Syntax</th>
-</tr>
-<tr>
-<td valign="top">
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Julia Syntax                                                                                                                                                                                                                                                                           | Python Syntax                                                                                                                                                                                                                                                                                                    | R Syntax                                                                                                                                                                                                                                                                                                               |
++========================================================================================================================================================================================================================================================================================+==================================================================================================================================================================================================================================================================================================================+========================================================================================================================================================================================================================================================================================================================+
+| \`\`\`julia \@BI function model(; weight, height) \# Priors sigma = m.dist.uniform(0, 50, name="sigma") alpha = m.dist.normal(178, 20, name="alpha") beta = m.dist.normal(0, 1, name="beta") \# Likelihood mu = alpha + beta \* weight m.dist.normal(mu, sigma, obs=height) end \`\`\` | \`\`\`python def model(height, weight): \# Priors sigma = bi.dist.uniform(0, 50, name='sigma', shape=(1,)) alpha = bi.dist.normal(178, 20, name='alpha', shape=(1,)) beta = bi.dist.normal(0, 1, name='beta', shape=(1,)) \# Likelihood mu = alpha + beta \* weight bi.dist.normal(mu, sigma, obs=height) \`\`\` | \`\`\`r model \<- function(height, weight){ \# Priors sigma = bi.dist.uniform(0, 50, name='sigma', shape=c(1)) alpha = bi.dist.normal(178, 20, name='alpha', shape=c(1)) beta = bi.dist.normal(0, 1, name='beta', shape=c(1)) \# Likelihood mu = alpha + beta \* weight bi.dist.normal(mu, sigma, obs=height) } \`\`\` |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-```julia
-@BI function model(; weight, height)
-    # Priors
-    sigma = m.dist.uniform(0, 50, name="sigma")
-    alpha = m.dist.normal(178, 20, name="alpha")
-    beta  = m.dist.normal(0, 1, name="beta")
-
-    # Likelihood
-    mu = alpha + beta * weight
-    m.dist.normal(mu, sigma, obs=height)
-end
-```
-
-</td>
-<td valign="top">
-
-```python
-def model(height, weight):
-    # Priors
-    sigma = bi.dist.uniform(0, 50, name='sigma', shape=(1,))
-    alpha = bi.dist.normal(178, 20, name='alpha', shape=(1,))
-    beta  = bi.dist.normal(0, 1, name='beta', shape=(1,))
-
-    # Likelihood
-    mu = alpha + beta * weight
-    bi.dist.normal(mu, sigma, obs=height)
-```
-
-</td>
-<td valign="top">
-
-
-```r
-model <- function(height, weight){
-  # Priors
-  sigma = bi.dist.uniform(0, 50, name='sigma', shape=c(1))
-  alpha = bi.dist.normal(178, 20, name='alpha', shape=c(1))
-  beta  = bi.dist.normal(0, 1, name='beta', shape=c(1))
-
-  # Likelihood
-  mu = alpha + beta * weight
-  bi.dist.normal(mu, sigma, obs=height)
-}
-```
-
-</td>
-</tr>
-</table>
-
----
+------------------------------------------------------------------------
 
 ## Built for Speed
 
@@ -88,62 +33,68 @@ Leveraging Just-In-Time (JIT) compilation via JAX, BI outperforms traditional en
 
 **Benchmark: Network Size 100 (Lower is Better)**
 
-| Engine | Execution Time | Relative Performance |
-| :--- | :--- | :--- |
-| **STAN (CPU)** | `████████████████████████████` | *Baseline* |
-| **BI (CPU)** | `████████████` | **~2.5x Faster** |
+| Engine         | Execution Time                 | Relative Performance |
+|:---------------|:-------------------------------|:---------------------|
+| **STAN (CPU)** | `████████████████████████████` | *Baseline*           |
+| **BI (CPU)**   | `████████████`                 | **\~2.5x Faster**    |
 
-*> Comparison of execution time for a Social Relations Model. Source: Sosa et al. (2025).*
+*\> Comparison of execution time for a Social Relations Model. Source: Sosa et al. (2025).*
 
----
+------------------------------------------------------------------------
 
 ## Installation & Setup
 
 ### 1. Install Julia
+
 Download and install [Julia 1.12 or later](https://julialang.org/downloads/)
 
 ### 2. Install Package
 
 #### From Julia Registry (after registration)
-```julia
+
+``` julia
 using Pkg
 Pkg.add("BayesianInference")
 ```
 
 #### Development Installation
-```julia
+
+``` julia
 using Pkg
 Pkg.add(url="https://github.com/BGN-for-ASNA/BIJ")
 ```
 
 Or clone the repository and activate it locally:
 
-```bash
+``` bash
 git clone https://github.com/BGN-for-ASNA/BIJ.git
 cd BIJ
 julia --project=.
 ```
 
 Then in Julia:
-```julia
+
+``` julia
 using Pkg
 Pkg.instantiate()
 using BayesianInference
 ```
 
 ### 3. Initialize Environment
+
 The package automatically manages Python dependencies via CondaPkg. On first use:
 
-```julia
+``` julia
 using BayesianInference
 # Python dependencies are installed automatically
 m = importBI()  # This will set up the environment on first run
 ```
 
 ### 4. Select Backend
+
 Choose `"cpu"`, `"gpu"`, or `"tpu"` when importing the library.
 
-```julia
+``` julia
 # Initialize on CPU (default)
 m = importBI(platform="cpu")
 
@@ -151,11 +102,11 @@ m = importBI(platform="cpu")
 m = importBI(platform="gpu")
 ```
 
----
+------------------------------------------------------------------------
 
 ## Quick Start
 
-```julia
+``` julia
 using BayesianInference
 
 # Initialize BI
@@ -187,22 +138,25 @@ m.summary()
 end
 ```
 
----
+------------------------------------------------------------------------
 
 ## Features
 
 ### Julia-Specific Features
+
 -   **`@BI` Macro**: Define models with proper Python interoperability
 -   **`@pyplot` Macro**: Display matplotlib plots directly in Julia
 -   **JAX Integration**: Direct access to JAX's NumPy API (`jnp` and `jax` constants)
 -   **Automatic Array Conversion**: Seamless conversion between Julia and JAX arrays
 
 ### Data Manipulation
+
 -   One-hot encoding
 -   Index variable conversion
 -   Scaling and normalization
 
 ### Modeling (via NumPyro)
+
 -   **Linear & Generalized Linear Models**: Regression, Binomial, Poisson, Negative Binomial, etc.
 -   **Hierarchical/Multilevel Models**: Varying intercepts and slopes.
 -   **Time Series & Processes**: Gaussian Processes, Gaussian Random Walks, State Space Models.
@@ -211,18 +165,20 @@ end
 -   **Bayesian Neural Networks (BNN)**.
 
 ### Diagnostics (via ArviZ)
+
 -   Posterior summary statistics and plots.
 -   Trace plots, Density plots, Autocorrelation.
 -   WAIC and LOO (ELPD) model comparison.
 -   R-hat and Effective Sample Size (ESS).
 
----
+------------------------------------------------------------------------
 
 ## Available Distributions
 
 The package provides wrappers for a comprehensive set of distributions from NumPyro.
 
 ### Continuous
+
 -   `m.dist.normal`, `m.dist.uniform`, `m.dist.student_t`
 -   `m.dist.cauchy`, `m.dist.halfcauchy`, `m.dist.halfnormal`
 -   `m.dist.gamma`, `m.dist.inverse_gamma`, `m.dist.exponential`
@@ -233,12 +189,14 @@ The package provides wrappers for a comprehensive set of distributions from NumP
 -   `m.dist.chi2`, `m.dist.gompertz`
 
 ### Discrete
+
 -   `m.dist.bernoulli`, `m.dist.binomial`
 -   `m.dist.poisson`, `m.dist.negative_binomial`
 -   `m.dist.geometric`, `m.dist.discrete_uniform`
 -   `m.dist.beta_binomial`, `m.dist.zero_inflated_poisson`
 
 ### Multivariate
+
 -   `m.dist.multivariate_normal`, `m.dist.multivariate_student_t`
 -   `m.dist.dirichlet`, `m.dist.dirichlet_multinomial`
 -   `m.dist.multinomial`
@@ -246,25 +204,27 @@ The package provides wrappers for a comprehensive set of distributions from NumP
 -   `m.dist.wishart`, `m.dist.wishart_cholesky`
 
 ### Time Series & Stochastic Processes
+
 -   `m.dist.gaussian_random_walk`
 -   `m.dist.gaussian_state_space`
 -   `m.dist.euler_maruyama`
 -   `m.dist.car` (Conditional AutoRegressive)
 
 ### Mixtures & Truncated
+
 -   `m.dist.mixture`, `m.dist.mixture_same_family`
 -   `m.dist.truncated_normal`, `m.dist.truncated_cauchy`
 -   `m.dist.lower_truncated_power_law`
 
 *(See package documentation for the full list)*
 
----
+------------------------------------------------------------------------
 
 ## Documentation
 
 For full documentation and examples:
 
-```julia
+``` julia
 # See the Quick Start guide
 # QUICKSTART.md
 
@@ -274,32 +234,30 @@ For full documentation and examples:
 
 For help with specific functions in the underlying BI library, refer to the [BayesianInference documentation](https://github.com/BGN-for-ASNA/BIR).
 
----
+------------------------------------------------------------------------
 
 ## Platform Support
 
-- ✅ Linux
-- ✅ macOS
-- ✅ Windows
+-   ✅ Linux
+-   ✅ macOS
+-   ✅ Windows
 
 GPU support available on compatible systems with JAX GPU installation.
 
----
+------------------------------------------------------------------------
 
 ## Related Packages
 
-- [BIR](https://github.com/BGN-for-ASNA/BIR) - R implementation
-- [BI]([https://github.com/cjdoris/PythonCall.jl](https://pypi.org/project/BayesInference/)) - Python implementation
+-   [BIR](https://github.com/BGN-for-ASNA/BIR) - R implementation
+-   [BI](https://pypi.org/project/BayesInference) - Python implementation
 
----
+------------------------------------------------------------------------
 
-<div align="center">
-
-**BayesianInference.jl (BIJ)**  
+::: {align="center"}
+**BayesianInference.jl (BIJ)**\
 Based on "The Bayesian Inference library for Python, R, Julia" by Sosa, McElreath, & Ross (2025).
 
-[GitHub](https://github.com/BGN-for-ASNA/BIJ) | [Issues](https://github.com/BGN-for-ASNA/BIJ/issues) | [Quick Start](QUICKSTART.md)
+[GitHub](https://github.com/BGN-for-ASNA/BIJ) \| [Issues](https://github.com/BGN-for-ASNA/BIJ/issues) \| [Quick Start](QUICKSTART.md)
 
-&copy; 2025 BayesianInference Team. Released under GPL-3.0.
-
-</div>
+© 2025 BayesianInference Team. Released under GPL-3.0.
+:::
