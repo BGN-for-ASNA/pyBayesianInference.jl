@@ -6,7 +6,7 @@
 *Run bespoke models on CPU, GPU, or TPU with Julia's native syntax.*
 
 [![License: GPL (>= 3)](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Julia](https://img.shields.io/badge/Julia-1.12+-9558B2?logo=julia)](https://julialang.org/)
+[![Julia](https://img.shields.io/badge/Julia-1+-9558B2?logo=julia)](https://julialang.org/)
 
 </div>
 
