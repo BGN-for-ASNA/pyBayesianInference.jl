@@ -9,7 +9,7 @@ PythonCall = "6099a3de-0909-46bc-b1f4-468b9a2dfc0d"
 [compat]
 julia = "1.2"
 CondaPkg = "0.2"
-PythonCall = "0.9"
+PythonCall = "0.9.30"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
